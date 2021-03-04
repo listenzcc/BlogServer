@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Blog</title>
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src=" https://cdn.bootcdn.net/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+
+    <script src="/static/js/script.js"></script>
+
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css" /> -->
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/sspai.css" />
+
+    <style type="text/css">
+        div#left-panel {
+            height: 10in;
+            width: 2in;
+            overflow-y: scroll;
+        }
+        
+        div#right-panel {
+            width: 10in;
+        }
+        
+        h3.date-entry {
+            font-size: 1em;
+            font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        }
+        
+        textarea#detail-editor {
+            /*height: 7in;*/
+            width: 5in;
+        }
+        
+        div#detail-viewer {
+            /*height: 7in;*/
+            width: 5in;
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header" class="full-width">
+        <h1>uygqfug uf gch</h1>
+    </div>
+    <div id="body" class="full-width flex">
+        <div id="left-panel"></div>
+        <div id="right-panel">
+            <div id="id-logo">
+                <h2 id="date-name">Date Logo</h2>
+                <div class="flex">
+                    <input type="button" value="Save" onclick="postLatestEditor()" />
+                    <input type="button" value="<" onclick="offsetDate(-1)" />
+                    <input type="text" id="input-date" />
+                    <input type="button" value=">" onclick="offsetDate(1)" />
+                    <input type="button" value="Goto" onclick="gotoDate()" />
+                </div>
+                <div class="flex">
+                    <textarea id="detail-editor" oninput="updateDetailViewer()"></textarea>
+                    <div id="detail-viewer" style=""></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer" class="full-width">
+        <p>It is good to see you, I am Chuncheng Zhang</p>
+    </div>
+    <script type="text/javascript">
+        updateDateLst();
+    </script>
+</body>
+
+</html>

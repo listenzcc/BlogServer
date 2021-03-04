@@ -1,0 +1,19 @@
+div {
+    margin: 3px;
+    padding: 2px;
+    border: 1px solid forestgreen;
+}
+
+div:hover {
+    border-color: goldenrod;
+}
+
+div.full-width {
+    width: 12in;
+}
+
+div.flex {
+    display: flex;
+    flex-wrap: warp;
+    justify-content: space-around;
+}
