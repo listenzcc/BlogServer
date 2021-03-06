@@ -39,7 +39,10 @@ def fetch_date(request, date):
         with open(path, 'w') as f:
             f.write('')
 
-    content = [e.strip() for e in open(path).read().split('\n')]
+    # Do not strip the [e],
+    # because if you do so,
+    # the returned markdown files will have no indent.
+    content = [e for e in open(path).read().split('\n')]
 
     df = pd.DataFrame()
     df['content'] = content
