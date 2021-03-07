@@ -1,95 +1,124 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Blog</title>
 
-<head>
-    <meta charset="utf-8" />
-    <title>Blog</title>
+        <script src="https://unpkg.com/prettier@2.2.1/standalone.js"></script>
+        <script src="https://unpkg.com/prettier@2.2.1/parser-markdown.js"></script>
 
-    <script src="https://d3js.org/d3.v6.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
 
-    <script src="/static/js/script.js"></script>
-    <script src="/static/js/mdTemplate.js"></script>
+        <script src="/static/js/script.js"></script>
+        <script src="/static/js/mdTemplate.js"></script>
 
-    <link rel="stylesheet" href="/static/css/style.css" />
-    <link rel="stylesheet" href="/static/css/sspai.css" />
-    <!-- <link rel="stylesheet" href="/static/css/mdStyle.css" /> -->
+        <link rel="stylesheet" href="/static/css/style.css" />
+        <link rel="stylesheet" href="/static/css/mdStyle.css" />
 
-    <style type="text/css">
-        div#left-panel {
-            height: 10in;
-            width: 3in;
-            overflow-y: scroll;
-        }
-        
-        div#right-panel {
-            width: 15in;
-        }
-        
-        h3.date-entry {
-            font-size: 1em;
-            font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-        }
-        
-        textarea#detail-editor {
-            /*height: 7in;*/
-            margin: 0.1in;
-            width: 7in;
-        }
-        
-        div#control-bar {
-            margin: 0.1in;
-            width: 10in;
-        }
-        
-        div#detail-viewer {
-            /*height: 7in;*/
-            margin: 0.1in;
-            width: 7in;
-            background-color: white;
-        }
-    </style>
-</head>
+        <style type="text/css">
+            div#left-panel {
+                height: 10in;
+                width: 3in;
+                overflow-y: scroll;
+            }
 
-<body>
-    <div id="header" class="full-width">
-        <h1>Daily Writing</h1>
-    </div>
-    <div id="body" class="full-width flex">
-        <div id="left-panel"></div>
-        <div id="right-panel">
-            <div id="id-logo">
-                <h2 id="date-name">Date Logo</h2>
-                <div class="flex" id="control-bar">
-                    <input type="button" value="Save" onclick="postLatestEditor()" />
-                    <input type="button" value="<" onclick="offsetDate(-1)" />
-                    <input type="text" id="input-date" />
-                    <input type="button" value=">" onclick="offsetDate(1)" />
-                    <input type="button" value="Goto" onclick="gotoDate()" />
-                    <input type="button" value="HelpMe" onclick="addTemplate()" />
-                </div>
-                <div class="flex">
-                    <textarea id="detail-editor" oninput="updateDetailViewer()"></textarea>
-                    <div id="detail-viewer" class="markdown-body"></div>
+            div#right-panel {
+                width: 15in;
+            }
+
+            h3.date-entry {
+                font-size: 1em;
+                font-family: "Franklin Gothic Medium", "Arial Narrow", Arial,
+                    sans-serif;
+            }
+
+            textarea#detail-editor {
+                /*height: 7in;*/
+                margin: 0.1in;
+                width: 7in;
+            }
+
+            div#control-bar {
+                margin: 0.1in;
+                width: 10in;
+            }
+
+            div#detail-viewer {
+                /*height: 7in;*/
+                margin: 0.1in;
+                width: 7in;
+                background-color: white;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="header" class="full-width">
+            <h1>Daily Writing</h1>
+        </div>
+        <div id="body" class="full-width flex">
+            <div id="left-panel"></div>
+            <div id="right-panel">
+                <div id="id-logo">
+                    <h2 id="date-name">Date Logo</h2>
+                    <div class="flex" id="control-bar">
+                        <input
+                            type="button"
+                            value="Save"
+                            onclick="postLatestEditor()"
+                        />
+                        <input
+                            type="button"
+                            value="<"
+                            onclick="offsetDate(-1)"
+                        />
+                        <input type="text" id="input-date" />
+                        <input
+                            type="button"
+                            value=">"
+                            onclick="offsetDate(1)"
+                        />
+                        <input
+                            type="button"
+                            value="Goto"
+                            onclick="gotoDate()"
+                        />
+                        <input
+                            type="button"
+                            value="Prettify"
+                            onclick="prettifyEditor()"
+                        />
+                        <input
+                            type="button"
+                            value="HelpMe"
+                            onclick="addTemplate()"
+                        />
+                    </div>
+                    <div class="flex">
+                        <textarea
+                            id="detail-editor"
+                            oninput="updateDetailViewer()"
+                        ></textarea>
+                        <div id="detail-viewer" class="markdown-body"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="footer" class="full-width">
-        <p>It is good to see you, I am Chuncheng Zhang</p>
-    </div>
-    <script type="text/javascript">
-        // Use csrf support
-        $.ajaxSetup({
-            data: {
-                csrfmiddlewaretoken: "{{csrf_token}}",
-            },
-        });
-    </script>
-    <script type="text/javascript">
-        updateDateLst();
-    </script>
-</body>
-
+        <div id="footer" class="full-width">
+            <p>It is good to see you, I am Chuncheng Zhang</p>
+        </div>
+        <script type="text/javascript">
+            // Use csrf support
+            $.ajaxSetup({
+                data: {
+                    csrfmiddlewaretoken: "{{csrf_token}}",
+                },
+            });
+        </script>
+        <script type="text/javascript">
+            updateDateLst();
+        </script>
+    </body>
 </html>

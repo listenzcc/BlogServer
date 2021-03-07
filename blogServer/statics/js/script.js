@@ -46,6 +46,17 @@ function updateDetailViewer() {
     document.getElementById("detail-viewer").innerHTML = html;
 }
 
+// Format the contents of #detail-editor,
+// using the prettier with markdown plugin,
+// the formatted contents overwrite the #detail-editor's contents to close the cycle.
+function prettifyEditor() {
+    let text = document.getElementById("detail-editor").value;
+    document.getElementById("detail-editor").value = prettier.format(text, {
+        parser: "markdown",
+        plugins: prettierPlugins,
+    });
+}
+
 /* -----------------------------------------------------------------
    Date Operation
 
@@ -65,7 +76,7 @@ function updateDateLst() {
     let url = "/query/dateLst";
 
     // Update date list
-    d3.json(url).then(function(json) {
+    d3.json(url).then(function (json) {
         console.log(url, json);
         let panel = d3.select("#left-panel");
         panel.selectAll("div").data([]).exit().remove();
@@ -93,7 +104,7 @@ function updateDateLst() {
             // - All existing details will be removed;
             // - The detail will be added below the date entry,
             //   and in the detail-editor.
-            .on("click", function(e, d) {
+            .on("click", function (e, d) {
                 console.log("You've clicked", d);
                 DATE = d;
                 updateDate();
@@ -127,7 +138,7 @@ function offsetDate(offset) {
 function gotoDate() {
     let date = document.getElementById("input-date").value;
     let url = "/query/date/" + date;
-    d3.json(url).then(function(json) {
+    d3.json(url).then(function (json) {
         console.log(url, json);
         DATE = date;
         updateDateLst();
@@ -139,11 +150,12 @@ function gotoDate() {
 // the backend should save the md file accordingly.
 function postLatestEditor() {
     $.post(
-        "/post/date/" + DATE, {
+        "/post/date/" + DATE,
+        {
             content: document.getElementById("detail-editor").value,
             date: DATE,
         },
-        function(data, status) {
+        function (data, status) {
             console.log(data);
             status = data["Status"];
             alert(status);
@@ -171,14 +183,14 @@ function updateDate() {
     let div = d3.select(entry.parentElement);
     let url = "/query/date/" + DATE;
     console.log(entry, div, url);
-    d3.json(url).then(function(json) {
+    d3.json(url).then(function (json) {
         console.log(url, json);
         // Clear existing details
         d3.selectAll(".date-detail").data([]).exit().remove();
         // Update date name
         d3.select("#date-name")
             .text(DATE)
-            .on("click", function(e, d) {
+            .on("click", function (e, d) {
                 updateDate();
             });
         // Add the detail
