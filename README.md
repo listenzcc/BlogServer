@@ -9,24 +9,30 @@ The aim is to build a web blog server of self-interest.
 - The project will provide automatics method for creating, showing, and editing for them.
 - Additionally, a web server based on django is used as a manager in the web-end.
 
-## Development Tips
+## Development To-do
 
-- Remove .strip() from the backend processing the sentences on 2021-03-06.
-  1. My original idea is to strip the sentences from the backend;
-  2. The aim is to strip the useless spaces around the sentences;
-  3. But the operation will definitely break the raw indent structure of the markdown script;
-  4. So the .strip() is removed from the backend.
+- Rendering the formula in markdown script like LaTeX does it;
+- How to deal with screen shots?
+  It seems to be necessary to work as a qualified notebook.
 
 ## Development Diary
 
-- 2020-03-09
+- 2021-03-06
+
+  1. Remove .strip() from the backend processing the sentences.
+  2. My original idea is to strip the sentences from the backend;
+  3. The aim is to strip the useless spaces around the sentences;
+  4. But the operation will definitely break the raw indent structure of the markdown script;
+  5. So the .strip() is removed from the backend.
+
+- 2021-03-09
 
   1. I put the processing bars on the top of my markdown editor and viewer;
   2. The left bar shows how long since your latest type (the left and blue bar);
   3. The right bar shows how many types you have done since the latest update (the right and red bar);
   4. Now, the update of the viewer will not automatically operating until the two bars both finish their counting.
 
-- 2020-03-10
+- 2021-03-10
 
   1. To speedup the loading of the web app;
   2. I put the known JS libraries into [third-party](blogServer/statics/third-party/) folder in the statics folder;
