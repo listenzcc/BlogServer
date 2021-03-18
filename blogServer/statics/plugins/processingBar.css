@@ -1,0 +1,9 @@
+div#typingBar {
+    background-color: #0000ff77;
+    transition: width 200ms;
+}
+
+div#distanceBar {
+    background-color: #ff00ff77;
+    transition: width 200ms;
+}

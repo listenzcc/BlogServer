@@ -1,131 +1,172 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Blog</title>
 
-<head>
-    <meta charset="utf-8" />
-    <title>Blog</title>
+        <!-- Showdown package -->
+        <script src="/static/third-party/showdown.min.js"></script>
 
-    <script src="/static/third-party/showdown.min.js"></script>
+        <!-- Prettier package -->
+        <script src="/static/third-party/prettier.js"></script>
+        <script src="/static/third-party/prettier-markdown.js"></script>
 
-    <script src="/static/third-party/prettier.js"></script>
-    <script src="/static/third-party/prettier-markdown.js"></script>
+        <!-- D3 package -->
+        <script src="/static/third-party/d3.js"></script>
 
-    <script src="/static/third-party/d3.js"></script>
+        <!-- Jquery package -->
+        <script src="/static/third-party/jquery.js"></script>
 
-    <script src="/static/third-party/jquery.js"></script>
+        <!-- Local script -->
+        <script src="/static/js/mdTemplate.js"></script>
+        <script src="/static/js/script.js"></script>
 
-    <script src="/static/js/mdTemplate.js"></script>
-    <script src="/static/js/script.js"></script>
+        <!-- Default style -->
+        <link rel="stylesheet" href="/static/css/style.css" />
 
-    <link rel="stylesheet" href="/static/css/style.css" />
-    <link rel="stylesheet" href="/static/css/mdStyle.css" />
+        <!-- Markdown style -->
+        <link rel="stylesheet" href="/static/css/mdStyle.css" />
 
-    <style type="text/css">
-        div#left-panel {
-            height: 10in;
-            width: 3in;
-            overflow-y: scroll;
-        }
-        
-        div#right-panel {
-            width: 15in;
-        }
-        
-        h3.date-entry {
-            font-size: 1em;
-            font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-        }
-        
-        textarea#detail-editor {
-            /*height: 7in;*/
-            width: 7in !important;
-        }
-        
-        div#control-bar {
-            width: 10in;
-        }
-        
-        div#detail-viewer {
-            height: 7in;
-            width: 7in;
-            background-color: white;
-            overflow-y: scroll;
-        }
-        
-        div#process-bar {
-            width: 10in;
-            height: 0.2in;
-        }
-        
-        div#process-bar>div {
-            width: 4in;
-        }
-        
-        div.fillAll {
-            margin: 0;
-            padding: 0;
-            border: 0;
-            height: 100%;
-        }
-        
-        div#pbar-1 {
-            background-color: #ff000077;
-        }
-        
-        div#pbar-2 {
-            background-color: #0000ff77;
-            transition: width 500ms;
-        }
-    </style>
-</head>
+        <!-- Local style -->
+        <style type="text/css">
+            div#left-panel {
+                height: 10in;
+                width: 3in;
+                overflow-y: scroll;
+            }
 
-<body>
-    <div id="header" class="full-width">
-        <h1>Daily Writing</h1>
-    </div>
-    <div id="body" class="full-width flex">
-        <div id="left-panel"></div>
-        <div id="right-panel">
-            <div id="id-logo">
-                <h2 id="date-name">Date Logo</h2>
-                <div class="flex" id="control-bar">
-                    <input type="button" value="Save" onclick="postLatestEditor()" />
-                    <input type="button" value="<" onclick="offsetDate(-1)" />
-                    <input type="text" id="input-date" />
-                    <input type="button" value=">" onclick="offsetDate(1)" />
-                    <input type="button" value="Goto" onclick="gotoDate()" />
-                    <input type="button" value="Prettify" onclick="prettifyEditor()" />
-                    <input type="button" value="HelpMe" onclick="addTemplate()" />
-                </div>
-                <div class="flex" id="process-bar">
-                    <div>
-                        <div id="pbar-2" class="fillAll"></div>
+            div#right-panel {
+                width: 15in;
+            }
+
+            h3.date-entry {
+                font-size: 1em;
+                font-family: "Franklin Gothic Medium", "Arial Narrow", Arial,
+                    sans-serif;
+            }
+
+            textarea#detail-editor {
+                /*height: 7in;*/
+                width: 7in !important;
+                margin: 3px;
+            }
+
+            div#detail-viewer {
+                height: 7in;
+                width: 7in;
+                background-color: white;
+                overflow-y: scroll;
+            }
+
+            div#process-bar {
+                height: 0.2in;
+            }
+
+            div#process-bar > div {
+                width: 48%;
+            }
+
+            div.fillAll {
+                margin: 0;
+                padding: 0;
+                border: 0;
+                height: 100%;
+            }
+        </style>
+
+        <!-- Plugins -->
+        <script src="/static/plugins/processingBar.js"></script>
+        <link rel="stylesheet" href="/static/plugins/processingBar.css" />
+    </head>
+
+    <body>
+        <!-- Header -->
+        <div id="header" class="full-width">
+            <h1>Daily Writing</h1>
+        </div>
+
+        <!-- Body -->
+        <div id="body" class="full-width flex">
+            <!-- Left panel -->
+            <div id="left-panel"></div>
+            <!-- Right panel -->
+            <div id="right-panel">
+                <div id="id-logo">
+                    <h2 id="date-name">Date Logo</h2>
+                    <div class="flex" id="control-bar">
+                        <input
+                            type="button"
+                            value="Save"
+                            onclick="postLatestEditor()"
+                        />
+                        <input
+                            type="button"
+                            value="<"
+                            onclick="offsetDate(-1)"
+                        />
+                        <input type="text" id="input-date" />
+                        <input
+                            type="button"
+                            value=">"
+                            onclick="offsetDate(1)"
+                        />
+                        <input
+                            type="button"
+                            value="Goto"
+                            onclick="gotoDate()"
+                        />
+                        <input
+                            type="button"
+                            value="Prettify"
+                            onclick="prettifyEditor()"
+                        />
+                        <input
+                            type="button"
+                            value="HelpMe"
+                            onclick="addTemplate()"
+                        />
                     </div>
-                    <div onclick="updateDetailViewer();prettifyEditor();">
-                        <div id="pbar-1" class="fillAll"></div>
+                    <div class="flex" id="process-bar"></div>
+                    <div class="flex">
+                        <textarea id="detail-editor"></textarea>
+                        <div id="detail-viewer" class="markdown-body"></div>
                     </div>
-                </div>
-                <div class="flex">
-                    <textarea id="detail-editor" oninput="newInput()"></textarea>
-                    <div id="detail-viewer" class="markdown-body"></div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="footer" class="full-width">
-        <p>It is good to see you, I am Chuncheng Zhang</p>
-    </div>
-    <script type="text/javascript">
-        // Use csrf support
-        $.ajaxSetup({
-            data: {
-                csrfmiddlewaretoken: "{{csrf_token}}",
-            },
-        });
-    </script>
-    <script type="text/javascript">
-        updateDateLst();
-    </script>
-</body>
 
+        <!-- Footer -->
+        <div id="footer" class="full-width">
+            <p>It is good to see you, I am Chuncheng Zhang</p>
+        </div>
+
+        <!-- CSRF support -->
+        <script type="text/javascript">
+            // Use csrf support
+            $.ajaxSetup({
+                data: {
+                    csrfmiddlewaretoken: "{{csrf_token}}",
+                },
+            });
+        </script>
+
+        <!-- Init date manager -->
+        <script type="text/javascript">
+            updateDateLst();
+        </script>
+
+        <!-- Use plugins -->
+        <script type="text/javascript">
+            // Typing bar
+            initTypingBar("prettifyEditor(); updateDetailViewer()");
+
+            // Distance bar
+            initDistanceBar("prettifyEditor(); updateDetailViewer()");
+
+            d3.select("#detail-editor").on("input", function (e) {
+                updateTypingBar(1000);
+                updateDistanceBar("step");
+            });
+        </script>
+    </body>
 </html>
