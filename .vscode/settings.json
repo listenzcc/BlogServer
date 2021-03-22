@@ -5,6 +5,7 @@
         "DATELST",
         "Dircolors",
         "Moba",
+        "iloc",
         "jupyterlab",
         "labextension",
         "plotly",

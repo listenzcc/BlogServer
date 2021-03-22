@@ -48,6 +48,7 @@ The aim is to build a web blog server of self-interest.
     4. Additionally, the [manage.py](blogServer/statics/third-party) has been renamed to [update_packages.py](blogServer/statics/third-party/update_packages.py)
 
 -   2021-03-18
+
     1. The processing bar plugin is developed;
     2. The [plugin](blogServer/statics/plugins) has two bars;
     3. The typingBar grows as user types, users may keep it alive by tying to not stop their typing;
