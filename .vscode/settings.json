@@ -4,11 +4,14 @@
         "Cygwin",
         "DATELST",
         "Dircolors",
+        "HKEY",
         "Moba",
+        "conda",
         "iloc",
         "jupyterlab",
         "labextension",
         "plotly",
+        "regedit",
         "rsync",
         "tqdm"
     ]
