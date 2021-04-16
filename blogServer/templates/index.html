@@ -1,172 +1,147 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Blog</title>
+  <head>
+    <meta charset="utf-8" />
+    <title>Blog</title>
 
-        <!-- Showdown package -->
-        <script src="/static/third-party/showdown.min.js"></script>
+    <!-- Showdown package -->
+    <script src="/static/third-party/showdown.min.js"></script>
 
-        <!-- Prettier package -->
-        <script src="/static/third-party/prettier.js"></script>
-        <script src="/static/third-party/prettier-markdown.js"></script>
+    <!-- Prettier package -->
+    <script src="/static/third-party/prettier.js"></script>
+    <script src="/static/third-party/prettier-markdown.js"></script>
 
-        <!-- D3 package -->
-        <script src="/static/third-party/d3.js"></script>
+    <!-- D3 package -->
+    <script src="/static/third-party/d3.js"></script>
 
-        <!-- Jquery package -->
-        <script src="/static/third-party/jquery.js"></script>
+    <!-- Jquery package -->
+    <script src="/static/third-party/jquery.js"></script>
 
-        <!-- Local script -->
-        <script src="/static/js/mdTemplate.js"></script>
-        <script src="/static/js/script.js"></script>
+    <!-- Local script -->
+    <script src="/static/js/mdTemplate.js"></script>
+    <script src="/static/js/script.js"></script>
 
-        <!-- Default style -->
-        <link rel="stylesheet" href="/static/css/style.css" />
+    <!-- Default style -->
+    <link rel="stylesheet" href="/static/css/style.css" />
 
-        <!-- Markdown style -->
-        <link rel="stylesheet" href="/static/css/mdStyle.css" />
+    <!-- Markdown style -->
+    <link rel="stylesheet" href="/static/css/mdStyle.css" />
 
-        <!-- Local style -->
-        <style type="text/css">
-            div#left-panel {
-                height: 10in;
-                width: 3in;
-                overflow-y: scroll;
-            }
+    <!-- Local style -->
+    <style type="text/css">
+      div#left-panel {
+        height: 10in;
+        width: 3in;
+        overflow-y: scroll;
+      }
 
-            div#right-panel {
-                width: 15in;
-            }
+      div#right-panel {
+        width: 15in;
+      }
 
-            h3.date-entry {
-                font-size: 1em;
-                font-family: "Franklin Gothic Medium", "Arial Narrow", Arial,
-                    sans-serif;
-            }
+      h3.date-entry {
+        font-size: 1em;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      }
 
-            textarea#detail-editor {
-                /*height: 7in;*/
-                width: 7in !important;
-                margin: 3px;
-            }
+      textarea#detail-editor {
+        /*height: 7in;*/
+        width: 7in !important;
+        margin: 3px;
+      }
 
-            div#detail-viewer {
-                height: 7in;
-                width: 7in;
-                background-color: white;
-                overflow-y: scroll;
-            }
+      div#detail-viewer {
+        height: 7in;
+        width: 7in;
+        background-color: white;
+        overflow-y: scroll;
+      }
 
-            div#process-bar {
-                height: 0.2in;
-            }
+      div#process-bar {
+        height: 0.2in;
+      }
 
-            div#process-bar > div {
-                width: 48%;
-            }
+      div#process-bar > div {
+        width: 48%;
+      }
 
-            div.fillAll {
-                margin: 0;
-                padding: 0;
-                border: 0;
-                height: 100%;
-            }
-        </style>
+      div.fillAll {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        height: 100%;
+      }
+    </style>
 
-        <!-- Plugins -->
-        <script src="/static/plugins/processingBar.js"></script>
-        <link rel="stylesheet" href="/static/plugins/processingBar.css" />
-    </head>
+    <!-- Plugins -->
+    <script src="/static/plugins/processingBar.js"></script>
+    <link rel="stylesheet" href="/static/plugins/processingBar.css" />
+  </head>
 
-    <body>
-        <!-- Header -->
-        <div id="header" class="full-width">
-            <h1>Daily Writing</h1>
+  <body>
+    <!-- Header -->
+    <div id="header" class="full-width">
+      <h1>Daily Writing</h1>
+    </div>
+
+    <!-- Body -->
+    <div id="body" class="full-width flex">
+      <!-- Left panel -->
+      <div id="left-panel"></div>
+      <!-- Right panel -->
+      <div id="right-panel">
+        <div id="id-logo">
+          <h2 id="date-name">Date Logo</h2>
+          <div class="flex" id="control-bar">
+            <input type="button" value="Save" onclick="postLatestEditor()" />
+            <input type="button" value="<" onclick="offsetDate(-1)" />
+            <input type="text" id="input-date" />
+            <input type="button" value=">" onclick="offsetDate(1)" />
+            <input type="button" value="Goto" onclick="gotoDate()" />
+            <input type="button" value="Prettify" onclick="prettifyEditor()" />
+            <input type="button" value="HelpMe" onclick="addTemplate()" />
+          </div>
+          <div class="flex" id="process-bar"></div>
+          <div class="flex">
+            <textarea id="detail-editor"></textarea>
+            <div id="detail-viewer" class="markdown-body"></div>
+          </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Body -->
-        <div id="body" class="full-width flex">
-            <!-- Left panel -->
-            <div id="left-panel"></div>
-            <!-- Right panel -->
-            <div id="right-panel">
-                <div id="id-logo">
-                    <h2 id="date-name">Date Logo</h2>
-                    <div class="flex" id="control-bar">
-                        <input
-                            type="button"
-                            value="Save"
-                            onclick="postLatestEditor()"
-                        />
-                        <input
-                            type="button"
-                            value="<"
-                            onclick="offsetDate(-1)"
-                        />
-                        <input type="text" id="input-date" />
-                        <input
-                            type="button"
-                            value=">"
-                            onclick="offsetDate(1)"
-                        />
-                        <input
-                            type="button"
-                            value="Goto"
-                            onclick="gotoDate()"
-                        />
-                        <input
-                            type="button"
-                            value="Prettify"
-                            onclick="prettifyEditor()"
-                        />
-                        <input
-                            type="button"
-                            value="HelpMe"
-                            onclick="addTemplate()"
-                        />
-                    </div>
-                    <div class="flex" id="process-bar"></div>
-                    <div class="flex">
-                        <textarea id="detail-editor"></textarea>
-                        <div id="detail-viewer" class="markdown-body"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Footer -->
+    <div id="footer" class="full-width">
+      <p>It is good to see you, I am Chuncheng Zhang</p>
+    </div>
 
-        <!-- Footer -->
-        <div id="footer" class="full-width">
-            <p>It is good to see you, I am Chuncheng Zhang</p>
-        </div>
+    <!-- CSRF support -->
+    <script type="text/javascript">
+      // Use csrf support
+      $.ajaxSetup({
+        data: {
+          csrfmiddlewaretoken: "{{csrf_token}}",
+        },
+      });
+    </script>
 
-        <!-- CSRF support -->
-        <script type="text/javascript">
-            // Use csrf support
-            $.ajaxSetup({
-                data: {
-                    csrfmiddlewaretoken: "{{csrf_token}}",
-                },
-            });
-        </script>
+    <!-- Init date manager -->
+    <script type="text/javascript">
+      updateDateLst();
+    </script>
 
-        <!-- Init date manager -->
-        <script type="text/javascript">
-            updateDateLst();
-        </script>
+    <!-- Use plugins -->
+    <script type="text/javascript">
+      // Typing bar
+      initTypingBar("updateDetailViewer()");
 
-        <!-- Use plugins -->
-        <script type="text/javascript">
-            // Typing bar
-            initTypingBar("prettifyEditor(); updateDetailViewer()");
+      // Distance bar
+      initDistanceBar("prettifyEditor(); updateDetailViewer()");
 
-            // Distance bar
-            initDistanceBar("prettifyEditor(); updateDetailViewer()");
-
-            d3.select("#detail-editor").on("input", function (e) {
-                updateTypingBar(1000);
-                updateDistanceBar("step");
-            });
-        </script>
-    </body>
+      d3.select("#detail-editor").on("input", function (e) {
+        updateTypingBar(1000);
+        updateDistanceBar("step");
+      });
+    </script>
+  </body>
 </html>
